@@ -12,8 +12,8 @@ struct StarterView: View {
     
     var body: some View {
         Group{
-            if userManager.isRegistered == false { LoginView() }
-            else { ContentView() }
+            if userManager.isRegistered { ContentView() }
+            else { LoginView() }
         }
     }
 }

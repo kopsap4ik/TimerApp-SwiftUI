@@ -15,6 +15,7 @@ class TimeCounter: ObservableObject {
     var buttonTitle = "START"
     
      func startTimer() {
+//        guard timer == nil else { return }
         if counter > 0 {
             timer = Timer.scheduledTimer(
                 timeInterval: 1,

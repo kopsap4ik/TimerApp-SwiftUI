@@ -13,7 +13,7 @@ class UserManager: ObservableObject {
     
     init() {}
     
-    init(name: String) {
-        self.name = name
-    }
+//    init(name: String) {
+//        self.name = name
+//    }
 }
