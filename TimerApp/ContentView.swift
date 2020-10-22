@@ -8,10 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject private var timer = TimeCounter()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            Text("\(timer.counter)")
+                .font(.largeTitle)
+                .padding()
+                .offset(x: 0, y: -200.0)
+
+
+            StartButton(timer: timer)
+            
+            
+        }
     }
+    
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
