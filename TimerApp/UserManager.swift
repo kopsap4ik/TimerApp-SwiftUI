@@ -6,12 +6,13 @@
 //
 
 import Combine
+import UIKit
 
 class UserManager: ObservableObject {
-    @Published var isRegistered = false
-    var name = ""
+    @Published var isRegistered = UserDefaults.standard.bool(forKey: "isRegistered")
+    var name = UserDefaults.standard.string(forKey: "Name") ?? ""
     
-    init() {}
+//    init() {}
     
 //    init(name: String) {
 //        self.name = name

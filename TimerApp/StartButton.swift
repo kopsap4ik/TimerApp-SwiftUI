@@ -19,11 +19,11 @@ struct StartButton: View {
                 .foregroundColor(.white)
                 .frame(width: 300, height: 60) // иначе тап сработает только на тексте
         }
-        .background(Color.red)
+        .disabled(timer.buttonIsWait)
+        .background(timer.buttonIsWait ? Color.gray : Color.red)
         .cornerRadius(20)
         .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(Color.orange, lineWidth: 2))
-        
+                    .stroke(Color.orange, lineWidth: 2)) 
     }
     
 }

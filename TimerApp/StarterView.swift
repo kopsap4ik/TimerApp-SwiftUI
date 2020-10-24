@@ -12,7 +12,7 @@ struct StarterView: View {
     
     var body: some View {
         Group{
-            if userManager.isRegistered { ContentView() }
+            if userManager.isRegistered == true  { ContentView() }
             else { LoginView() }
         }
     }
@@ -21,5 +21,6 @@ struct StarterView: View {
 struct StarterView_Previews: PreviewProvider {
     static var previews: some View {
         StarterView()
+            .environmentObject(UserManager())
     }
 }

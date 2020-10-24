@@ -13,25 +13,32 @@ struct ContentView: View {
     @EnvironmentObject var userManager: UserManager
     
     var body: some View {
-        VStack {
-            Text("\(userManager.name )")
+        VStack(spacing: 50) {
+            Text("Привет, \(userManager.name)")
                 .font(.largeTitle)
-                .padding()
-                .offset(x: 0, y: -200.0)
             
             Text("\(timer.counter)")
                 .font(.largeTitle)
-                .padding()
-                .offset(x: 0, y: -200.0)
-
-
+            
             StartButton(timer: timer)
+
+            Button(action: { logOut() }) {
+                Text("Выйти")
+            }
             
-            
+            Spacer()
+                .frame(height: 20.0)
         }
     }
-    
-    
+}
+
+extension ContentView {
+    private func logOut() {
+        UserDefaults.standard.set(false, forKey: "isRegistered")
+        UserDefaults.standard.set(String(""), forKey: "Name")
+        userManager.name = ""
+        userManager.isRegistered = false
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {

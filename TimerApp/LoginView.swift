@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @State private var name = ""
     @EnvironmentObject var userManager: UserManager
+    
     private var wrongName: Bool {
         if name.count > 2 { return false }
         else { return true }
     }
-    
+
     var body: some View {
-        VStack {
-            
+        VStack {   
             HStack {
                 VStack {
                     Image(systemName: (wrongName ? "lock.fill" : "lock.open"))
@@ -31,7 +30,8 @@ struct LoginView: View {
                 }
                 
                 TextField("Введите логин",
-                          text: $name
+                          text: $name,
+                          onCommit: { registerUser() }
                 )
                 .multilineTextAlignment(.leading)
                 
@@ -54,6 +54,8 @@ struct LoginView: View {
 extension LoginView { 
     private func registerUser() {
         if name.isEmpty == false {
+            UserDefaults.standard.set(name, forKey: "Name")
+            UserDefaults.standard.set(true, forKey: "isRegistered")
             userManager.name = name
             userManager.isRegistered = true
         }

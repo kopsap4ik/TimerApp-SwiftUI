@@ -10,12 +10,12 @@ import Combine
 
 class TimeCounter: ObservableObject {
     let objectWillChange = PassthroughSubject<TimeCounter, Never>()
-    var counter = 3
+    var counter = UserManager().name.count
     var timer: Timer?
     var buttonTitle = "START"
+    var buttonIsWait = false
     
      func startTimer() {
-//        guard timer == nil else { return }
         if counter > 0 {
             timer = Timer.scheduledTimer(
                 timeInterval: 1,
@@ -31,6 +31,7 @@ class TimeCounter: ObservableObject {
         timer?.invalidate()
         timer = nil
         buttonTitle = "RESET"
+        buttonIsWait = false
     }
     
     @objc private func updateCounter() {
@@ -42,9 +43,12 @@ class TimeCounter: ObservableObject {
     
     private func buttonWait(){
         if buttonTitle == "RESET"{
-            counter = 3
+            counter = UserManager().name.count
             buttonTitle = "START"
-        } else { buttonTitle = "Wait..." }
+        } else {
+            buttonTitle = "Wait..."
+            buttonIsWait = true
+        }
         objectWillChange.send(self)
     }
     
