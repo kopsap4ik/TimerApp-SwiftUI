@@ -8,13 +8,21 @@
 import Combine
 import UIKit
 
-class UserManager: ObservableObject {
-    @Published var isRegistered = UserDefaults.standard.bool(forKey: "isRegistered")
-    var name = UserDefaults.standard.string(forKey: "Name") ?? ""
+final class UserManager: ObservableObject {
+    @Published var user = User()
     
-//    init() {}
+    var nameIsValid: Bool {
+        user.name.count >= 3 // минимум 3 символа в имени
+    }
     
-//    init(name: String) {
-//        self.name = name
-//    }
+    init() {}
+
+    init(user: User) {
+        self.user = user
+    }
+}
+
+struct User: Codable {
+    var name = ""
+    var isRegistered = false
 }

@@ -8,29 +8,23 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var name = ""
     @EnvironmentObject var userManager: UserManager
-    
-    private var wrongName: Bool {
-        if name.count > 2 { return false }
-        else { return true }
-    }
 
     var body: some View {
         VStack {   
             HStack {
                 VStack {
-                    Image(systemName: (wrongName ? "lock.fill" : "lock.open"))
+                    Image(systemName: (!userManager.nameIsValid ? "lock.fill" : "lock.open"))
                         .frame(width: 30.0)
-                        .foregroundColor(wrongName ? .red : .green)
+                        .foregroundColor(!userManager.nameIsValid ? .red : .green)
                     
-                    Text("\(name.count)")
+                    Text("\(userManager.user.name.count)")
                         .font(.caption)
-                        .foregroundColor(wrongName ? .red : .green)
+                        .foregroundColor(!userManager.nameIsValid ? .red : .green)
                 }
                 
                 TextField("Введите логин",
-                          text: $name,
+                          text: $userManager.user.name,
                           onCommit: { registerUser() }
                 )
                 .multilineTextAlignment(.leading)
@@ -39,25 +33,23 @@ struct LoginView: View {
             }
             .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
             .frame(width: 300.0)
-            .background(Capsule().stroke(Color(UIColor.lightGray)))
+            .background(Capsule().stroke(Color(.lightGray)))
             
             Button(action: { registerUser() }) {
                 Text("ВОЙТИ")
                     .bold()
             }
             .padding(.top, 10)
-            .disabled(wrongName)
+            .disabled(!userManager.nameIsValid)
         }
     }
 }
 
 extension LoginView { 
     private func registerUser() {
-        if name.isEmpty == false {
-            UserDefaults.standard.set(name, forKey: "Name")
-            UserDefaults.standard.set(true, forKey: "isRegistered")
-            userManager.name = name
-            userManager.isRegistered = true
+        if !userManager.user.name.isEmpty {
+            userManager.user.isRegistered = true
+            DataManager.shared.saveUser(user: userManager.user)
         }
     }
 }

@@ -10,7 +10,7 @@ import Combine
 
 class TimeCounter: ObservableObject {
     let objectWillChange = PassthroughSubject<TimeCounter, Never>()
-    var counter = UserManager().name.count
+    var counter = DataManager.shared.loadUser().name.count
     var timer: Timer?
     var buttonTitle = "START"
     var buttonIsWait = false
@@ -43,7 +43,7 @@ class TimeCounter: ObservableObject {
     
     private func buttonWait(){
         if buttonTitle == "RESET"{
-            counter = UserManager().name.count
+            counter = DataManager.shared.loadUser().name.count
             buttonTitle = "START"
         } else {
             buttonTitle = "Wait..."

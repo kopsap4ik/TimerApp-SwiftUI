@@ -14,30 +14,29 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 50) {
-            Text("Привет, \(userManager.name)")
+            Spacer()
+            
+            Text("Привет, \(userManager.user.name)")
                 .font(.largeTitle)
             
             Text("\(timer.counter)")
                 .font(.largeTitle)
             
-            StartButton(timer: timer)
-
-            Button(action: { logOut() }) {
-                Text("Выйти")
-            }
+            ActionButton(
+                titleBtn: timer.buttonTitle,
+                color: timer.buttonIsWait ? Color.gray : Color.red
+            ){ timer.startTimer() }
+            .disabled(timer.buttonIsWait)
             
+            Spacer()
+            
+            ActionButton(titleBtn: "Выйти", color: .green) {
+                DataManager.shared.deleteUser(userManager: userManager)
+            }
+        
             Spacer()
                 .frame(height: 20.0)
         }
-    }
-}
-
-extension ContentView {
-    private func logOut() {
-        UserDefaults.standard.set(false, forKey: "isRegistered")
-        UserDefaults.standard.set(String(""), forKey: "Name")
-        userManager.name = ""
-        userManager.isRegistered = false
     }
 }
 
